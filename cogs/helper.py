@@ -12,30 +12,39 @@ class help(commands.Cog):
         for text_channel in self.text_channel_text:
             await text_channel.send(msg)
 
-    @commands.command(name="help", help="Displays all available commands")
-    async def help(self, ctx):
-        await ctx.send( """
-```
-General commands:
-.ping - Tests if bot is responsive
-.play <keywords/url> - Finds the song on youtube and plays it in your current voicechannel. Will resume if paused.
-.queue - Shows the music queue
-.skip - skips the current song
-.clear - Empties the queue
-.stop - Stops the current song, clears the queue and disconnects the bot
-.pause - Pauses the current song
-.resume - Resumes the song
-```
-""")
+    @commands.command(name="help")
+    async def custom_help(self, ctx):
+        embed = discord.Embed(
+            title="📘 Available Commands",
+            description="Here are the commands you can use:",
+            color=discord.Color.blurple()
+        )
+
+        for command in self.bot.commands:
+            if not command.hidden:
+                name = f"!{command.name}"
+                help_text = command.help or "No description."
+                embed.add_field(name=name, value=help_text, inline=False)
+
+        await ctx.send(embed=embed)
 
     @commands.command(name="cooked")
     async def cooked(self, ctx):
         try:
             with open('./images/cooked.jpg', 'rb') as f:
-                picture = discord.File(f)
-                await ctx.send(file=picture)
+                picture = discord.File(f, filename="cooked.jpg")
+                
+                embed = discord.Embed(
+                    #title="You just got cooked!",
+                    color=discord.Color.orange()
+                )
+                embed.set_image(url="attachment://cooked.jpg")
+
+                await ctx.send(embed=embed, file=picture)
+
         except Exception as e:
             print(e)
+            await ctx.send("Something went wrong while trying to cook.")
             
 async def setup(bot):
     await bot.add_cog(help(bot))

@@ -37,8 +37,8 @@ class Wiki(commands.Cog):
         weapon_name = info.get('weapon1name')
         if weapon_name:
             description += (
-                f"\n**Weapon:** {weapon_name}\n"
-                f"Damage: {info.get('weapon1damage', 'N/A')}, "
+                f"\n**{weapon_name}:**\n"
+                f"Damage: {info.get('weapon1damage', 'N/A')}\n "
                 f"Range: {info.get('weapon1range', 'N/A')}\n"
             )
 
