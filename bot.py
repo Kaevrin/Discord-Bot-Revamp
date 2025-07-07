@@ -14,7 +14,6 @@ intents = discord.Intents.all()
 intents.members = True
 bot = commands.Bot(command_prefix=".", intents=intents, help_command=None)
 admin = [127558963662159872, 448886759749713939]
-
 @bot.command(name="reload")
 async def reload(ctx):
     if ctx.author.id in admin:
@@ -37,3 +36,4 @@ async def main():
     await bot.start(TOKEN)
 
 asyncio.run(main())
+
